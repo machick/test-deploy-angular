@@ -11,8 +11,8 @@ services:
     #run:
     container_name: angular-v1
     restart: always
-#    networks:
-#      - nginx_default
-#networks:
-#  nginx_default:
-#  external: true
+    networks:
+      - nginx_default
+networks:
+  nginx_default:
+  external: true
