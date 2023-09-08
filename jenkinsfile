@@ -6,10 +6,10 @@ pipeline{
     }
 
     parameters{
-        string(name: 'container_name', defaultVale: 'angular_app', description: 'Nombre del contenedor de docker')
-        string(name: 'image_name', defaultVale: 'angular_img', description: 'Nombre de la imagen de docker')
-        string(name: 'tag_image', defaultVale: 'lts', description: 'Tag de la imagen de angular')
-        string(name: 'container_port', defaultVale: 80, description: 'Puerto que usa el contenedor')
+        string(name: 'container_name', defaultValue: 'angular_app', description: 'Nombre del contenedor de docker')
+        string(name: 'image_name', defaultValue: 'angular_img', description: 'Nombre de la imagen de docker')
+        string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de angular')
+        string(name: 'container_port', defaultValue: 80, description: 'Puerto que usa el contenedor')
     }
 
     stages{
