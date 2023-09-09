@@ -9,12 +9,7 @@ const routes: Routes = [
 
   // Rutas de autenticación
   { path: 'auth', loadChildren: () => import('./modules/authentication/authentication-routing.module').then(m => m.AuthenticationRoutingModule) }
-
-  // Rutas de autenticación
-  // { path: 'login', component: LoginComponent },
-  // Otras rutas generales
-
-  // { path: 'home', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
+ 
 ];
 
 @NgModule({
