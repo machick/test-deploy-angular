@@ -35,3 +35,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## update
 `docker compose up -d --build`
 
+
+## Angular Comands
+ng generate module modules/<Modulo-Especifico>/<Modulo-Especifico>-routing --flat ///Routing del modulo especifico
+ng generate module modules/authentication/authentication-routing --flat ///Routing del modulo especifico
+
+
+ng generate component modules/<Modulo-Especifico>/components/<Nombre-Especifico> //Componente Login para el Modulo Autentificacion
+ng generate component modules/<Modulo-Especifico>/components/<Nombre-Especifico> //Componente * para el Modulo *
+
+
+ng generate component shared/components/<nombre de componentes Compartido>
+
