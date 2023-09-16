@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
+import { TutorialsListComponent } from './components/tutorials-list/tutorials-list.component';
+import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
+import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
 
 const routes: Routes = [
-  // Ruta por defecto (puede ser la página de inicio)
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  // Rutas de autenticación
-  { path: 'auth', loadChildren: () => import('./modules/authentication/authentication-routing.module').then(m => m.AuthenticationRoutingModule) }
- 
+  { path: '', redirectTo: 'tutorials', pathMatch: 'full' },
+  { path: 'tutorials', component: TutorialsListComponent },
+  { path: 'tutorials/:id', component: TutorialDetailsComponent },
+  { path: 'add', component: AddTutorialComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
 export class AppRoutingModule { }

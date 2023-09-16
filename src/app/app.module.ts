@@ -1,29 +1,28 @@
 import { NgModule } from '@angular/core';
-
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { LateralMenuComponent } from './modules/authentication/components/lateral-menu/lateral-menu.component';
-import { TimeLineComponent } from './modules/authentication/components/time-line/time-line.component';
-import { HeaderComponent } from './modules/authentication/components/header/header.component';
-import { AssetPortfolioComponent } from './modules/authentication/components/asset-portfolio/asset-portfolio.component';// Importa RouterModule personalizado
+import { AppComponent } from './app.component';
+import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
+import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
+import { TutorialsListComponent } from './components/tutorials-list/tutorials-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LateralMenuComponent,
-    TimeLineComponent,
-    HeaderComponent,
-    AssetPortfolioComponent
+    AddTutorialComponent,
+    TutorialDetailsComponent,
+    TutorialsListComponent
   ],
   imports: [
-    AppRoutingModule, // Agrega RouterModule aqu
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-
 export class AppModule { }
