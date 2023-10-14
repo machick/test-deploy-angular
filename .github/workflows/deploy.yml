@@ -103,8 +103,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           
           script: |
-            ls -R 
-            docker ps
+            docker cp dist/test-deploy/. angular-v1:/usr/share/nginx/html
+
 
   # deploy-app-vps:
   #   needs: [build]
