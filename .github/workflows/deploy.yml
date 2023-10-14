@@ -6,26 +6,100 @@ name: CI-CD-angular
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
-  build:
-
+  avoid_reduncy:
+    runs-on: ubuntu-22.04
+    steps: 
+      - name: Cancela build previos redundantes
+        uses: styfle/cancel-workflow-action@0.12.0
+        with: access_token ${{ github.token }}
+  install:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+        # preconfig de node
+      - uses: actions/setup-node@v3.8.1
+        with:
+          cache: 'npm'
+          node-version: '18.18.0'
+      - name: Instalando dependencias
+        # npm ci es especifico de npm para instalar con cicd  
+        run: npm ci
+  build: 
+    runs-on: ubuntu-22.04
+    steps:
+        # verifica cambios
+      - name: Verifica cambios 
+        uses: actions/checkout@v3
+        #ultimo commit para mas velocidad
+        with:
+          fetch-depth: 0
+        # preconfig de node
+      - name: Instalando node  
+        uses: actions/setup-node@v3.8.1
+        with:
+          cache: 'npm'
+          node-version: '18.18.0'
+      - name: Instalando dependencias
+        # npm ci es especifico de npm para instalar con cicd  
+        run: npm ci
+      - name: Build aplicacion
+        run: npm run build  
+      - name: Pasar build a siguiente job
+        uses: actions/upload-artifact@v2
+        with:
+           name: dist
+           path: dist
+  test:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    steps:
+      # verifica cambios
+    - name: Verifica cambios 
+      uses: actions/checkout@v3
+      #ultimo commit para mas velocidad
+      with:
+        fetch-depth: 0
+      # preconfig de node
+    - name: Instalando node  
+      uses: actions/setup-node@v3.8.1
+      with:
+        cache: 'npm'
+        node-version: '18.18.0'
+    - name: Instalando dependencias
+      # npm ci es especifico de npm para instalar con cicd  
+      run: npm ci
+    - name: Obteniendo build anterior
+      uses: actions/download-artifact@v2
+      with:
+        name: dist
+        path: dist
+    - name: Corriendo tests
+      run: npm test
+  deploy-app-vps:
     runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker compose up -d --build    
+  # build:
+  #   runs-on: ubuntu-22.04
 
     #strategy:
     #  matrix:
     #    node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    steps:
-    - uses: actions/checkout@v3
+    # steps:
+    # - uses: actions/checkout@v3
     #- name: Use Node.js ${{ matrix.node-version }}
     #  uses: actions/setup-node@v3
     #  with:
     #    node-version: ${{ matrix.node-version }}
     #    cache: 'npm'
     #- run: npm i
-    - run: docker compose up -d --build
+    # - run: docker compose up -d --build
     #- run: npm
+    
