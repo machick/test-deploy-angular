@@ -82,34 +82,33 @@ jobs:
   #   - name: Corriendo tests
   #     #run: npm test
   #     run: npm test -- --browsers=ChromeHeadless --watch=false
+  
   deploy-app-vps:
     needs: [build]
     runs-on: self-hosted
     steps:
-      - name: Obteniendo build anterior
-        uses: actions/download-artifact@v2.1.1
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.0
         with:
-          name: dist
-          path: dist
-      - uses: actions/checkout@v3
-      # - run: docker compose up -d --build  
-      - run: docker cp dist/test-deploy/. angular-v1:/usr/share/nginx/html
-  # build:
-  #   runs-on: ubuntu-22.04
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          # port: ${{ secrets.PORT }}
+          script: |
+            whoami
+            ls
 
-    #strategy:
-    #  matrix:
-    #    node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+  # deploy-app-vps:
+  #   needs: [build]
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Obteniendo build anterior
+  #       uses: actions/download-artifact@v2.1.1
+  #       with:
+  #         name: dist
+  #         path: dist
+  #     - uses: actions/checkout@v3
+  #     # - run: docker compose up -d --build  
+  #     - run: docker cp dist/test-deploy/. angular-v1:/usr/share/nginx/html
+  
 
-    # steps:
-    # - uses: actions/checkout@v3
-    #- name: Use Node.js ${{ matrix.node-version }}
-    #  uses: actions/setup-node@v3
-    #  with:
-    #    node-version: ${{ matrix.node-version }}
-    #    cache: 'npm'
-    #- run: npm i
-    # - run: docker compose up -d --build
-    #- run: npm
-    
