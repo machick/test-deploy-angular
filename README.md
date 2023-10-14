@@ -1,4 +1,8 @@
 # TestDeploy
+/usr/share/nginx/html
+
+docker cp dist/test-deploy/. angular-v1:/usr/share/nginx/html
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
