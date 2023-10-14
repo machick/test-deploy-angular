@@ -103,8 +103,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           
           script: |
-            ls -a 
-            cd /home && ls
+            ls -R 
+            docker ps
 
   # deploy-app-vps:
   #   needs: [build]
