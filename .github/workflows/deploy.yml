@@ -82,7 +82,20 @@ jobs:
   #   - name: Corriendo tests
   #     #run: npm test
   #     run: npm test -- --browsers=ChromeHeadless --watch=false
-  
+  deploy-vps:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+          
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: artifacts
+
   deploy-app-vps:
     needs: [build]
     runs-on: ubuntu-22.04
@@ -100,10 +113,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           # ssh key private de alguien que tenga permiso para entrar al server
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          
+          #docker cp dist/. angular-v1:/usr/share/nginx/html
           script: |
-            ls
-            docker cp dist/. angular-v1:/usr/share/nginx/html
+            ls -R
+            
 
 
   # deploy-app-vps:
