@@ -100,11 +100,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Obteniendo build anterior
-        uses: actions/download-artifact@v2.1.1
+        uses: actions/download-artifact@v2
         with:
           path: artifacts
       - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.0.0
+        run: ls -R
+        working-directory: artifacts
+      - uses: appleboy/ssh-action@v1.0.0
         with:
           #devcops.com.ar
           host: ${{ secrets.SSH_HOST }}
@@ -116,7 +118,7 @@ jobs:
           script: |
             ls -R
             docker cp dist/. angular-v1:/usr/share/nginx/html
-          working-directory: artifacts
+          working-directory: artifacts  
 
 
 
