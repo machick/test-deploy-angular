@@ -75,7 +75,7 @@ jobs:
       # npm ci es especifico de npm para instalar con cicd  
       run: npm ci
     - name: Obteniendo build anterior
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v2.28.0
       with:
         name: dist
         path: dist
