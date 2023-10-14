@@ -80,7 +80,8 @@ jobs:
         name: dist
         path: dist
     - name: Corriendo tests
-      run: npm test
+      #run: npm test
+      run: npm test -- --browsers=ChromeHeadless --watch=false
   deploy-app-vps:
     needs: [test]
     runs-on: self-hosted
