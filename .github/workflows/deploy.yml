@@ -86,12 +86,10 @@ jobs:
     needs: [build]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      
+      - uses: actions/checkout@v3
       - uses: actions/download-artifact@v2
         with:
           path: artifacts
-          
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: artifacts
@@ -100,10 +98,12 @@ jobs:
     needs: [build]
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v3
       - name: Obteniendo build anterior
         uses: actions/download-artifact@v2.1.1
         with:
           name: dist
+          path: artifacts
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -116,7 +116,9 @@ jobs:
           #docker cp dist/. angular-v1:/usr/share/nginx/html
           script: |
             ls -R
-            
+            docker cp dist/. angular-v1:/usr/share/nginx/html
+          working-directory: artifacts
+
 
 
   # deploy-app-vps:
