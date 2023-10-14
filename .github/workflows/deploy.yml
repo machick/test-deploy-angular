@@ -103,21 +103,23 @@ jobs:
         with:
           path: artifacts
       - name: executing remote ssh commands using ssh key
-        run: ls -R
+        run: |
+          ls -R
+          docker ps
         working-directory: artifacts
-      - uses: appleboy/ssh-action@v1.0.0
-        with:
-          #devcops.com.ar
-          host: ${{ secrets.SSH_HOST }}
-          #root
-          username: ${{ secrets.SSH_USER }}
-          # ssh key private de alguien que tenga permiso para entrar al server
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          #docker cp dist/. angular-v1:/usr/share/nginx/html
-          script: |
-            ls -R
-            docker cp dist/. angular-v1:/usr/share/nginx/html
-          working-directory: artifacts  
+      # - uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     #devcops.com.ar
+      #     host: ${{ secrets.SSH_HOST }}
+      #     #root
+      #     username: ${{ secrets.SSH_USER }}
+      #     # ssh key private de alguien que tenga permiso para entrar al server
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     #docker cp dist/. angular-v1:/usr/share/nginx/html
+      #     script: |
+      #       ls -R
+      #       docker cp dist/. angular-v1:/usr/share/nginx/html
+      #     working-directory: artifacts  
 
 
 
