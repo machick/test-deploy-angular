@@ -85,7 +85,7 @@ jobs:
   
   deploy-app-vps:
     needs: [build]
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
     steps:
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
