@@ -104,9 +104,19 @@ jobs:
           path: artifacts
       - name: executing remote ssh commands using ssh key
         run: |
-          ls -R
-          docker ps
+          ls
         working-directory: artifacts
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          #devcops.com.ar
+          host: ${{ secrets.SSH_HOST }}
+          #root
+          username: ${{ secrets.SSH_USER }}
+          # ssh key private de alguien que tenga permiso para entrar al server
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "dist/"
+          target: /home/machi/angular-dist-new/
       # - uses: appleboy/ssh-action@v1.0.0
       #   with:
       #     #devcops.com.ar
