@@ -115,8 +115,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           # ssh key private de alguien que tenga permiso para entrar al server
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist/"
-          target: /home/machi/angular-dist-new/
+          source: "dist/*"
+          target: /home/machi/cicd
       # - uses: appleboy/ssh-action@v1.0.0
       #   with:
       #     #devcops.com.ar
