@@ -55,51 +55,42 @@ jobs:
         with:
            name: dist
            path: dist
-  # test:
-  #   needs: [build]
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     # verifica cambios
-  #   - name: Verifica cambios 
-  #     uses: actions/checkout@v3
-  #     #ultimo commit para mas velocidad
-  #     with:
-  #       fetch-depth: 0
-  #     # preconfig de node
-  #   - name: Instalando node  
-  #     uses: actions/setup-node@v3.8.1
-  #     with:
-  #       cache: 'npm'
-  #       node-version: '18.18.0'
-  #   - name: Instalando dependencias
-  #     # npm ci es especifico de npm para instalar con cicd  
-  #     run: npm ci
-  #   - name: Obteniendo build anterior
-  #     uses: actions/download-artifact@v2.1.1
-  #     with:
-  #       name: dist
-  #       path: dist
-  #   - name: Corriendo tests
-  #     #run: npm test
-  #     run: npm test -- --browsers=ChromeHeadless --watch=false
-  # deploy-vps:
-  #   needs: [build]
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         path: artifacts
-  #     - name: Display structure of downloaded files
-  #       run: ls -R
-  #       working-directory: artifacts
-
-  deploy-app-vps:
+  test:
     needs: [build]
     runs-on: ubuntu-22.04
     steps:
+      # verifica cambios
+    - name: Verifica cambios 
+      uses: actions/checkout@v3
+      #ultimo commit para mas velocidad
+      with:
+        fetch-depth: 0
+      # preconfig de node
+    - name: Instalando node  
+      uses: actions/setup-node@v3.8.1
+      with:
+        cache: 'npm'
+        node-version: '18.18.0'
+    - name: Instalando dependencias
+      # npm ci es especifico de npm para instalar con cicd  
+      run: npm ci
+    - name: Obteniendo build anterior
+      uses: actions/download-artifact@v2.1.1
+      with:
+        name: dist
+        path: dist
+    - name: Corriendo tests
+      # de esta forma corre por terminal solamente
+      run: npm test -- --browsers=ChromeHeadless --watch=false
+
+  deploy-app-vps:
+    needs: [test]
+    runs-on: ubuntu-22.04
+    steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v2
+        with:
+            fetch-depth: 0
+      - uses: actions/download-artifact@v2.1.1
         with:
             name: dist
             path: dist
@@ -128,20 +119,3 @@ jobs:
           #docker cp dist/. angular-v1:/usr/share/nginx/html
           script: |
             docker cp /home/machi/cicd/dist/test-deploy/. angular-v1:/usr/share/nginx/html
-
-
-
-  # deploy-app-vps:
-  #   needs: [build]
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: Obteniendo build anterior
-  #       uses: actions/download-artifact@v2.1.1
-  #       with:
-  #         name: dist
-  #         path: dist
-  #     - uses: actions/checkout@v3
-  #     # - run: docker compose up -d --build  
-  #     - run: docker cp dist/test-deploy/. angular-v1:/usr/share/nginx/html
-  
-
