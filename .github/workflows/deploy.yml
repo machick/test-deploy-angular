@@ -127,8 +127,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           #docker cp dist/. angular-v1:/usr/share/nginx/html
           script: |
-            ls -R
-            docker cp dist/. angular-v1:/usr/share/nginx/html
+            docker cp /home/machi/cicd/dist/. angular-v1:/usr/share/nginx/html
 
 
 
